@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AgriSurgeon - AI-Powered Plant Disease Detection with IoT Integration">
+    <meta name="theme-color" content="#2ecc71">
+    <title>AgriSurgeon | Plant Disease Detection</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/glassmorphism.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-content">
+                <div class="logo-section">
+                    <span class="logo-icon">🌱</span>
+                    <div class="logo-text">
+                        <h1 class="logo">AgriSurgeon</h1>
+                        <p class="tagline">AI-Powered Plant Disease Detection</p>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <button class="nav-btn active" data-section="upload">Diagnose</button>
+                    <button class="nav-btn" data-section="history">History</button>
+                    <button class="nav-btn" data-section="about">About</button>
+                    <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="hero-title">Intelligent Plant Disease Detection & Advisory</h2>
+                <p class="hero-subtitle">Powered by MobileNetV3, SVM, and IoT Environmental Sensing</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-value">98.50%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">38</span>
+                        <span class="stat-label">Disease Types</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">&lt;200ms</span>
+                        <span class="stat-label">Response Time</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="section upload-section" id="upload">
+            <div class="section-container">
+                <div class="glass-card upload-card">
+                    <div class="card-header">
+                        <h3 class="card-title">📸 Upload Leaf Image</h3>
+                        <p class="card-subtitle">Analyze your plant's health in seconds</p>
+                    </div>
+
+                    <!-- Image Upload Area -->
+                    <div class="image-upload-wrapper">
+                        <div class="image-upload-area glass-effect" id="dropZone">
+                            <div class="upload-content">
+                                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                </svg>
+                                <p class="upload-text">Drag your image here or click to browse</p>
+                                <p class="upload-hint">Supported: JPG, PNG, WebP (max 10MB)</p>
+                            </div>
+                            <input type="file" id="imageInput" accept="image/*" hidden aria-label="Upload plant image">
+                        </div>
+                        <div class="image-preview" id="imagePreview" style="display: none;">
+                            <img id="previewImage" src="" alt="Preview">
+                            <button class="clear-preview" id="clearPreview" type="button">✕</button>
+                        </div>
+                    </div>
+
+                    <!-- Environmental Controls -->
+                    <div class="environmental-section">
+                        <div class="section-title">🌍 Environmental Conditions</div>
+                        <div class="controls-grid">
+                            <div class="control-group">
+                                <label for="temperature" class="control-label">
+                                    <span class="label-text">Temperature</span>
+                                    <span class="label-value" id="tempValue">25</span>°C
+                                </label>
+                                <input 
+                                    type="range" 
+                                    id="temperature" 
+                                    class="slider" 
+                                    min="10" 
+                                    max="50" 
+                                    value="25" 
+                                    step="0.5"
+                                    aria-label="Temperature slider"
+                                >
+                                <div class="slider-labels">
+                                    <span>10°C</span>
+                                    <span>50°C</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="humidity" class="control-label">
+                                    <span class="label-text">Humidity</span>
+                                    <span class="label-value" id="humidityValue">65</span>%
+                                </label>
+                                <input 
+                                    type="range" 
+                                    id="humidity" 
+                                    class="slider" 
+                                    min="0" 
+                                    max="100" 
+                                    value="65" 
+                                    step="1"
+                                    aria-label="Humidity slider"
+                                >
+                                <div class="slider-labels">
+                                    <span>0%</span>
+                                    <span>100%</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="soilMoisture" class="control-label">
+                                    <span class="label-text">Soil Moisture</span>
+                                    <span class="label-value" id="soilValue">50</span>%
+                                </label>
+
+                                <input 
+                                    type="range" 
+                                    id="soilMoisture" 
+                                    class="slider" 
+                                    min="0" 
+                                    max="100" 
+                                    value="50" 
+                                    step="1"
+                                    aria-label="Soil moisture slider"
+                                >
+
+                                <div class="slider-labels">
+                                    <span>0%</span>
+                                    <span>100%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button id="predictBtn" class="btn btn-primary btn-lg" type="button">
+                            <span class="btn-icon">🔍</span>
+                            <span class="btn-text">Analyze Plant Health</span>
+                            <span class="btn-loader spinner hidden" id="btnSpinner"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="section results-section" id="resultsSection" style="display: none;">
+            <div class="section-container">
+                <div class="glass-card results-card">
+                    <div class="card-header">
+                        <h3 class="card-title">📋 Diagnosis Results</h3>
+                    </div>
+
+                    <!-- Disease Information -->
+                    <div class="results-grid">
+                        <div class="result-item glass-effect">
+                            <div class="result-icon">🦠</div>
+                            <div class="result-content">
+                                <p class="result-label">Identified Disease</p>
+                                <p class="disease-name" id="diseaseName">-</p>
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill" id="confidenceFill"></div>
+                                </div>
+                                <p class="confidence-text" id="confidenceText">Confidence: -</p>
+                            </div>
+                        </div>
+
+                        <div class="result-item glass-effect">
+                            <div class="result-icon">🌡️</div>
+                            <div class="result-content">
+                                <p class="result-label">Environmental Context</p>
+                                <p class="condition-text" id="conditionInfo">-</p>
+                                <p class="risk-level" id="riskLevel">Risk Level: -</p>
+                                <p class="env-factor" id="envFactor">Environmental Influence: -</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advisory Section -->
+                    <div class="advisory-section">
+                        <div class="section-title">📚 Treatment & Prevention Advisory</div>
+                        
+                        <div class="advisory-grid">
+                            <div class="advisory-box">
+                                <div class="advisory-header">
+                                    <h4 class="advisory-title">🔬 Disease Cause</h4>
+                                    <span class="pathogen-type" id="pathogenType">-</span>
+                                </div>
+                                <p class="advisory-content" id="cause">-</p>
+                            </div>
+
+                            <div class="advisory-box">
+                                <div class="advisory-header">
+                                    <h4 class="advisory-title">💊 Treatment</h4>
+                                    <span class="advisory-urgency" id="urgency">-</span>
+                                </div>
+                                <p class="advisory-content" id="cure">-</p>
+                            </div>
+
+                            <div class="advisory-box">
+                                <div class="advisory-header">
+                                    <h4 class="advisory-title">🛡️ Prevention</h4>
+                                </div>
+                                <p class="advisory-content" id="prevention">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons result-actions">
+                        <button id="clearBtn" class="btn btn-secondary" type="button">
+                            <span class="btn-text">Analyze Another Image</span>
+                        </button>
+                        <button id="downloadBtn" class="btn btn-outline" type="button">
+                            <span class="btn-text">Download Report</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="section history-section" id="history" style="display: none;">
+            <div class="section-container">
+                <div class="glass-card history-card">
+                    <div class="card-header">
+                        <h3 class="card-title">📊 Prediction History</h3>
+                        <p class="card-subtitle">View all your previous plant disease diagnoses</p>
+                    </div>
+
+                    <!-- History Controls -->
+                    <div class="history-controls">
+                        <button id="clearHistoryBtn" class="btn btn-outline btn-sm" type="button">
+                            <span class="btn-text">Clear History</span>
+                        </button>
+                    </div>
+
+                    <!-- History Container -->
+                    <div id="historyContainer" class="history-container">
+                        <p class="empty-state">Loading history...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section about-section" id="about" style="display: none;">
+            <div class="section-container">
+                <div class="about-grid">
+                    <div class="glass-card about-card">
+                        <h3 class="card-title">🎯 About AgriSurgeon</h3>
+                        <p class="about-text">
+                            AgriSurgeon leverages cutting-edge artificial intelligence to revolutionize plant disease detection. 
+                            Our hybrid multimodal approach combines deep learning visual analysis with real-time IoT environmental 
+                            sensing to provide unprecedented accuracy in disease diagnosis and agricultural decision support.
+                        </p>
+                    </div>
+
+                    <div class="glass-card about-card">
+                        <h3 class="card-title">⚙️ Technology Stack</h3>
+                        <div class="tech-list">
+                            <div class="tech-item">
+                                <span class="tech-badge">MobileNetV3</span>
+                                <span class="tech-desc">Efficient visual feature extraction (5.4M parameters)</span>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-badge">Linear SVM</span>
+                                <span class="tech-desc">Interpretable multimodal classification</span>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-badge">IoT Sensors</span>
+                                <span class="tech-desc">Real-time environmental context integration</span>
+                            </div>
+                            <div class="tech-item">
+                                <span class="tech-badge">FastAPI</span>
+                                <span class="tech-desc">High-performance backend framework</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card about-card">
+                        <h3 class="card-title">📊 Disease Coverage</h3>
+                        <p class="about-text">
+                            38 disease categories spanning:
+                        </p>
+                        <ul class="disease-list">
+                            <li>🍎 Apple (Scab, Rust, Healthy)</li>
+                            <li>🍅 Tomato (Multiple pathogens)</li>
+                            <li>🥔 Potato (Late Blight, Early Blight)</li>
+                            <li>🍇 Grape (Black Rot, Leaf Blight)</li>
+                            <li>+ 10 more plant species</li>
+                        </ul>
+                    </div>
+
+                    <div class="glass-card about-card">
+                        <h3 class="card-title">🔍 Performance Metrics</h3>
+                        <div class="metrics-grid">
+                            <div class="metric">
+                                <span class="metric-value">98.50%</span>
+                                <span class="metric-label">Accuracy</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">200ms</span>
+                                <span class="metric-label">Latency</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">45MB</span>
+                                <span class="metric-label">Model Size</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">5.4M</span>
+                                <span class="metric-label">Parameters</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error/Status Messages -->
+        <div id="notification" class="notification" style="display: none;"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">&copy; 2026 AgriSurgeon - Bhukya Akash ,MTech- Automation and Robotics</p>
+            <p class="footer-version">Contact: 9182664585</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api-client.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
